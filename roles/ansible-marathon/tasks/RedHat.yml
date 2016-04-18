@@ -1,0 +1,8 @@
+---
+- name: Add mesosphere repo
+  include: add-mesos-repo.yml
+  tags: bootstrap
+
+- name: Install Marathon
+  yum: name={{ marathon_yum_package }} state=present
+  tags: deploy

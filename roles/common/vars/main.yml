@@ -1,0 +1,14 @@
+---
+
+yumsoftware:
+  - { name: 'wget', version: '1.14-10.el7_0.1' }
+  - { name: 'unzip', version: '6.0-15.el7'}
+  - { name: 'selinux-policy', version: '3.13.1-60.el7_2.3'}
+  - { name: 'python', version: '2.7.5-34.el7'}
+  - { name: 'git', version: '1.8.3.1-6.el7_2.1'}
+
+dockerengineversion: 1.9.1-1.el7.centos
+
+pythonsoftware:
+   - six
+   - docker-py

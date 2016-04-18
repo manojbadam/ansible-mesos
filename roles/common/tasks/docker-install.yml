@@ -1,0 +1,9 @@
+---
+
+  - name: Add docker repo
+    copy: src=docker.repo dest=/etc/yum.repos.d/docker-main.repo owner=root group=root mode=0644
+    tags: bootstrap
+
+  - name: Install docker-engine
+    yum: name=docker-engine-{{ dockerengineversion }} state=present update_cache=yes
+    tags: deploy

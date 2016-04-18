@@ -1,0 +1,4 @@
+[zookeeper]
+demo1 ansible_ssh_host=162.243.144.221
+demo2 ansible_ssh_host=104.131.130.232
+demo3 ansible_ssh_host=45.55.6.126

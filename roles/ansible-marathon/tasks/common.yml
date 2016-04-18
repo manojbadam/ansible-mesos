@@ -1,0 +1,9 @@
+---
+
+  - name: Generate the zookeeper url
+    set_fact: mesos_zookeeper_masters="zk://{% for i in groups['zookeeper'] %}{{ hostvars[i]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{%endfor %}/mesos"
+    tags: [reconfigure,bootstrap]
+  
+  - name: Compute the quorum 
+    set_fact: marathon_zookeeper_state="zk://{% for i in groups['zookeeper'] %}{{ hostvars[i]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{%endfor %}/marathon"
+    tags: [reconfigure,bootstrap]

@@ -1,0 +1,49 @@
+[zookeeper]
+demo1 ansible_ssh_host=45.55.24.43
+demo2 ansible_ssh_host=159.203.210.77
+demo3 ansible_ssh_host=159.203.210.160
+
+[mesos-master]
+demo1 ansible_ssh_host=45.55.24.43
+demo2 ansible_ssh_host=159.203.210.77
+demo3 ansible_ssh_host=159.203.210.160
+
+[marathon]
+demo1 ansible_ssh_host=45.55.24.43
+demo2 ansible_ssh_host=159.203.210.77
+demo3 ansible_ssh_host=159.203.210.160
+
+[mesos-slave]
+demo1 ansible_ssh_host=45.55.24.43
+demo2 ansible_ssh_host=159.203.210.77
+demo3 ansible_ssh_host=159.203.210.160
+
+[mongo-master]
+demo1 ansible_ssh_host=45.55.24.43
+
+[mongo-slave]
+demo2 ansible_ssh_host=159.203.210.77
+
+[mongo-arbiter]
+demo3 ansible_ssh_host=159.203.210.160
+
+[redis-master]
+demo3 ansible_ssh_host=159.203.210.160
+
+[redis-slave]
+demo2 ansible_ssh_host=159.203.210.77
+
+[redis-arbiter]
+demo1 ansible_ssh_host=45.55.24.43
+
+[elasticsearch]
+demo1 ansible_ssh_host=45.55.24.43
+demo2 ansible_ssh_host=159.203.210.77
+demo3 ansible_ssh_host=159.203.210.160
+
+[marathonlb]
+demo2 ansible_ssh_host=159.203.210.77
+demo3 ansible_ssh_host=159.203.210.160
+
+[loadbalancer]
+demo1 ansible_ssh_host=45.55.24.43

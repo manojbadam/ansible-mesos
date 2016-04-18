@@ -1,0 +1,49 @@
+---
+
+  - name: Initialize empty array
+    set_fact: ports="[]"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the mesos-master firewall ports
+    set_fact: ports="{{ ports }} {% if 'mesos-master' in group_names %} + ['5050/tcp','2181/tcp', '2888/tcp', '3888/tcp', '8080/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the mongodb-master firewall ports
+    set_fact: ports="{{ ports }} {% if 'mongo-master' in group_names %} + ['27017/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the mongodb-slave firewall ports
+    set_fact: ports="{{ ports }} {% if 'mongo-slave' in group_names %} + ['27017/tcp'] {% endif %}"    
+    tags: [reconfigure,bootstrap]
+
+  - name: set the mongodb-arbiter firewall ports
+    set_fact: ports="{{ ports }} {% if 'mongo-arbiter' in group_names %} + ['27017/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the redis-master firewall ports
+    set_fact: ports="{{ ports }} {% if 'redis-master' in group_names %} + ['6379/tcp','26379/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the redis-slave firewall ports
+    set_fact: ports="{{ ports }} {% if 'redis-slave' in group_names %} + ['6379/tcp','26379/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the redis-arbiter firewall ports
+    set_fact: ports="{{ ports }} {% if 'redis-arbiter' in group_names %} + ['26379/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the elasticsearch firewall ports
+    set_fact: ports="{{ ports }} {% if 'elasticsearch' in group_names %} + ['9200/tcp','9300/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the loadbalancer firewall ports
+    set_fact: ports="{{ ports }} {% if 'loadbalancer' in group_names %} + ['4997/tcp','7001/tcp', '7002/tcp', '7003/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]
+
+  - name: set the marathonlb firewall ports
+    set_fact: ports="{{ ports }} {% if 'marathonlb' in group_names %} + ['8001/tcp','8002/tcp', '8003/tcp', '8004/tcp', '8005/tcp', '8006/tcp', '8007/tcp', '8008/tcp', '8009/tcp', '8010/tcp', '8011/tcp', '4997/tcp'] {% endif %}" 
+    tags: [reconfigure,bootstrap]
+
+  - name: set the mesos-slave firewall ports
+    set_fact: ports="{{ ports }} {% if 'mesos-slave' in group_names %} + ['5051/tcp'] {% endif %}"
+    tags: [reconfigure,bootstrap]

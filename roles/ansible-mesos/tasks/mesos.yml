@@ -1,0 +1,62 @@
+---
+# == Work Dir for replicated log
+- name: create work dir
+  file: path={{ mesos_work_dir }} state=directory
+  tags: bootstrap
+
+# == Remove default configs
+- name: Remove Default Mesos Configs
+  file: state=absent path=/etc/mesos/
+  tags: reconfigure
+
+- name: Remove Mesos ZK File
+  file: state=absent path=/etc/mesos/zk
+  tags: reconfigure
+
+- name: Remove Default Mesos-Master Config
+  file: state=absent path=/etc/mesos-master/
+  tags: reconfigure
+
+- name: Remove Default Mesos-Slave Config
+  file: state=absent path=/etc/mesos-slave/
+  tags: reconfigure
+
+
+# == Configure and recreate
+- name: Mesos default config file
+  template: src=conf-mesos.j2 dest=/etc/default/mesos
+  notify:
+    - Restart mesos-master
+    - Restart mesos-slave
+  tags: reconfigure
+
+- name: Mesos Master config file
+  template: src=conf-mesos-master.j2 dest=/etc/default/mesos-master
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-master
+  tags: reconfigure  
+
+- name: Mesos Slave config file
+  template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-slave
+  tags: reconfigure  
+
+- name: Mesos master systemd script
+  template: src=mesos-master.service.j2 dest=/usr/lib/systemd/system/mesos-master.service
+  when: (mesos_install_mode == "master" or mesos_install_mode == "master-slave")
+  notify:
+    - Reload daemon
+    - Restart mesos-master
+  tags: reconfigure  
+
+- name: Mesos slave systemd script
+  template: src=mesos-slave.service.j2 dest=/usr/lib/systemd/system/mesos-slave.service
+  when: (mesos_install_mode == "slave" or mesos_install_mode == "master-slave") 
+  notify:
+    - Reload daemon
+    - Restart mesos-slave
+  tags: reconfigure  
+

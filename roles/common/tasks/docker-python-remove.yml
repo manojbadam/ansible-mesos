@@ -1,0 +1,5 @@
+---
+
+  - name: remove the docker-python module
+    yum: name=docker-python state=absent
+    tags: deploy

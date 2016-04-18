@@ -1,0 +1,34 @@
+---                                                        
+  - name: start firewalld                                 
+    service: name=firewalld.service state=started
+    tags: bootstrap
+
+  - name: set default zone for firewalld
+    command: firewall-cmd --set-default-zone=work
+    tags: bootstrap
+
+  - name: set the default ports variable
+    include: common.yml  
+
+  - name: add ports to the firewall          
+    firewalld: port={{ item }} permanent=true zone=work state=enabled
+    with_items: "{{ ports }}" 
+    notify:
+      - reload firewalld
+    tags: bootstrap
+      
+  - include: docker-install.yml
+
+  - include: pip-install.yml
+
+  - name: Install the default software
+    yum: name='{{ item.name }}-{{ item.version }}' state=present update_cache=yes
+    with_items: '{{ yumsoftware }}'
+    tags: deploy
+
+  - name: Install the pip modules
+    pip: name="{{ item }}"
+    with_items: '{{ pythonsoftware }}'
+    tags: deploy
+
+  - include: docker-python-remove.yml

@@ -1,0 +1,11 @@
+---
+- include: common.yml
+
+- include: RedHat.yml
+  when: ansible_os_family == "RedHat"
+
+- include: conf.yml
+
+- name: Start Marathon service
+  service: name=marathon state=restarted enabled=yes
+  tags: reconfigure

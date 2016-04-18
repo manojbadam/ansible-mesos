@@ -1,0 +1,14 @@
+---
+ansible_playbook_version: 0.1
+zookeeper_playbook_version: "0.9.1.1"
+zookeeper_version: 3.4.6-0.1.20141204175332.centos7
+
+apt_cache_timeout: 3600
+client_port: 2181
+init_limit: 5
+sync_limit: 2
+tick_time: 2000
+zoo_id: 1
+data_dir: /var/lib/zookeeper
+log_dir: /var/log/zookeeper
+

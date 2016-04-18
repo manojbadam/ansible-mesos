@@ -1,0 +1,52 @@
+---
+
+- name: Create Marathon conf directory
+  file: path=/etc/marathon/conf state=directory
+  tags: bootstrap
+
+- name: Set required --master option
+  template: src=master.j2 dest=/etc/marathon/conf/master
+  tags: reconfigure
+
+- name: Remove optional --artifact_store option
+  file: path=/etc/marathon/conf/artifact_store state=absent
+  when: artifact_store == ""
+  tags: reconfigure
+
+- name: Set optional --artifact_store option
+  template: src=artifact_store.j2 dest=/etc/marathon/conf/artifact_store
+  when: artifact_store != ""
+  tags: reconfigure
+
+- name: Remove optional --checkpoint option
+  file: path=/etc/marathon/conf/?checkpoint state=absent
+  when: checkpoint == ""
+  tags: reconfigure
+
+- name: Set optional --checkpoint option
+  file: path=/etc/marathon/conf/?checkpoint state=touch
+  when: checkpoint != ""
+  tags: reconfigure
+
+- name: Remove optional --zk option
+  file: path=/etc/marathon/conf/zk state=absent
+  when: marathon_zookeeper_state == ""
+  tags: reconfigure
+
+- name: Set optional --zk option
+  template: src=zk.j2 dest=/etc/marathon/conf/zk
+  when: marathon_zookeeper_state != ""
+  tags: reconfigure
+
+- name: Set --hostname option
+  template: src=hostname.j2 dest=/etc/marathon/conf/hostname
+  tags: reconfigure
+
+- name: Set --http-port option
+  template: src=http_port.j2 dest=/etc/marathon/conf/http_port
+  tags: reconfigure
+  
+- name: systemd environment variables
+  template: src=sysconfig.j2 dest=/etc/sysconfig/marathon 
+  tags: reconfigure
+

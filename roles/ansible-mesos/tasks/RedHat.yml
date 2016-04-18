@@ -1,0 +1,16 @@
+---
+- name: Add mesosphere repo
+  include: add-mesos-repo.yml
+  tags: bootstrap
+
+- name: Install os packages
+  yum: name={{item}} state=present
+  with_items:
+    - wget
+    - curl
+    - unzip
+    - libselinux-python 
+    - python-setuptools
+    - mesos-{{mesos_version}}
+  tags: deploy  
+    

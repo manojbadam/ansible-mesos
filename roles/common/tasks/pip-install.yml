@@ -1,0 +1,9 @@
+---
+
+  - name: Add the repo
+    yum: name=epel-release state=present
+    tags: bootstrap
+
+  - name: Install PIP
+    yum: name=python-pip state=latest
+    tags: deploy
